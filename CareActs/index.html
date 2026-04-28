@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  
+  <!-- SEO Meta Tags -->
+  <title>CareActs – Relationship Activity Ideas & Bond Building Tips</title>
+  <meta name="description" content="Discover personalized activities, gestures & tips to strengthen your relationships. Use the spinner, Reset Me mood tool, and Bond Health Meter to connect deeper with family, partners & friends.">
+  <meta name="keywords" content="relationship tips, activity ideas, bonding, care acts, family connection">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://careacts.app" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://careacts.app">
+  <meta property="og:title" content="CareActs – Strengthen Your Bonds, One Idea at a Time">
+  <meta property="og:description" content="Get personalized relationship tips, reset heavy moments, and measure your bond health. Free to use.">
+  <meta property="og:image" content="https://careacts.app/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://careacts.app">
+  <meta property="twitter:title" content="CareActs – Relationship Activity Ideas & Bond Building Tips">
+  <meta property="twitter:description" content="Get personalized relationship tips, reset heavy moments, and measure your bond health. Free to use.">
+  <meta property="twitter:image" content="https://careacts.app/og-image.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CareActs",
+    "url": "https://careacts.app",
+    "description": "A free tool that generates personalized relationship activity ideas, bond health checks, and mood reset tips.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#FFD93D",
+            "soft-blue": "#BAE6FD",
+            "soft-pink": "#FBCFE8",
+            "soft-yellow": "#FEF08A",
+            "hub-bg": "#E0F2FE",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1.5rem",
+            "lg": "2.5rem",
+            "xl": "4rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-hub-bg font-display text-slate-800 gamified-bg min-h-screen overflow-x-hidden">
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="abstract-shape w-96 h-96 bg-soft-blue top-[-10%] left-[-10%] rounded-full"></div>
+    <div class="abstract-shape w-[500px] h-[500px] bg-soft-pink bottom-[-10%] right-[-10%] rounded-full"></div>
+    <div class="abstract-shape w-80 h-80 bg-soft-yellow top-1/2 left-1/3 rounded-full"></div>
+  </div>
+  <div class="relative flex flex-col min-h-screen">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[999] pointer-events-none opacity-0 transition-all duration-300 translate-y-4">
+      <div class="bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl">
+        <span id="toast-icon" class="material-symbols-outlined text-yellow-400 text-xl">check_circle</span>
+        <span id="toast-msg">Saved!</span>
+      </div>
+    </div>
+
+    <header class="flex items-center justify-between px-6 lg:px-12 py-6 bg-white/30 backdrop-blur-sm sticky top-0 z-50">
+      <div class="flex items-center gap-3">
+        <div
+          class="size-10 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary border-2 border-primary">
+          <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black tracking-tighter text-slate-900">CareActs</h2>
+      </div>
+      <div class="flex items-center gap-6">
+        <nav class="hidden md:flex items-center gap-8">
+          <a class="text-sm font-bold hover:text-blue-500 transition-colors cursor-pointer" onclick="event.preventDefault(); openBlog();">Journal</a>
+          <a class="text-sm font-bold hover:text-blue-500 transition-colors cursor-pointer" onclick="event.preventDefault(); openAbout();">About Us</a>
+          <a id="nav-saved-ideas" class="text-sm font-bold hover:text-blue-500 transition-colors cursor-pointer" href="#" onclick="event.preventDefault(); openSavedIdeas();">My Saved Ideas</a>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden size-12 flex items-center justify-center text-slate-900 bg-white rounded-2xl border-4 border-slate-100 shadow-sm active:scale-90 transition-all">
+          <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- VIEW: RESULT DASHBOARD -->
+    <main id="view-result" class="view">
+      <div class="max-w-[1400px] mx-auto w-full px-6 pt-4 pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="lg:col-span-8 flex flex-col gap-10">
+            <div
+              class="level-card rounded-[2.5rem] overflow-hidden p-8 md:p-14 relative text-slate-900 flex flex-col md:flex-row gap-12 items-start">
+              <div class="absolute top-0 right-0 p-10 opacity-[0.03] pointer-events-none">
+                <span class="material-symbols-outlined text-slate-900 text-[180px]">auto_awesome</span>
+              </div>
+
+              <div
+                class="size-32 md:size-40 flex-shrink-0 bg-yellow-400/20 rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-lg rotate-[-6deg]">
+                <span id="result-icon" class="material-symbols-outlined text-yellow-500 text-[80px]">restaurant</span>
+              </div>
+
+              <div class="flex-1 relative z-10">
+                <div class="flex flex-wrap gap-3 mb-8">
+                  <span
+                    class="bg-pink-400 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">High
+                    Impact</span>
+                  <span id="result-effort-tag"
+                    class="bg-blue-100 border-2 border-white px-5 py-2 rounded-full text-[10px] font-black text-blue-500 uppercase tracking-widest shadow-sm">Medium
+                    Effort</span>
+                </div>
+
+                <h1 id="result-title"
+                  class="text-slate-900 text-3xl md:text-5xl font-black leading-tight mb-8 tracking-tighter"></h1>
+                <p id="result-desc"
+                  class="text-slate-600 text-xl md:text-3xl font-medium leading-relaxed mb-12 max-w-2xl"></p>
+
+                <div class="flex flex-wrap gap-6">
+                  <button id="save-idea-btn"
+                    class="flex-1 md:flex-none px-10 h-16 bg-pink-400 text-white rounded-3xl font-black text-xl shadow-[6px_6px_0px_0px_rgba(251,207,232,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center">
+                    <span id="save-btn-icon" class="material-symbols-outlined mr-3 text-2xl">favorite</span>
+                    <span id="save-btn-label" class="whitespace-nowrap">Save Idea</span>
+                  </button>
+                  <button id="share-btn"
+                    class="flex-1 md:flex-none px-10 h-16 bg-white border-4 border-slate-100 rounded-3xl font-black text-xl text-slate-600 hover:border-pink-400 hover:text-pink-400 transition-all flex items-center justify-center">
+                    <span id="share-btn-icon" class="material-symbols-outlined mr-3 text-2xl">share</span>
+                    <span id="share-btn-label" class="whitespace-nowrap">Share</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-10 border-b-4 border-white pb-6">
+                <h3 class="text-blue-500 text-sm font-black uppercase tracking-[0.2em]">Similar Ideas</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="similar-ideas-container"></div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex flex-col gap-10">
+            <div class="level-card p-12 rounded-[3rem] flex flex-col items-center relative overflow-hidden group">
+              <div class="absolute -top-20 -right-20 size-80 bg-blue-100 rounded-full blur-[100px] opacity-50"></div>
+              <h3 class="text-slate-900 text-2xl font-black mb-12 text-center tracking-tight">Next Adventure</h3>
+
+              <div class="relative size-60 md:size-72 mb-12">
+                <div
+                  class="w-full h-full rounded-full border-8 border-white shadow-xl bg-hub-bg overflow-hidden rotate-[15deg] relative">
+                  <div class="absolute inset-0 bg-yellow-400/30" style="clip-path: polygon(50% 50%, 0 0, 100% 0);">
+                  </div>
+                  <div class="absolute inset-0 bg-blue-400/30" style="clip-path: polygon(50% 50%, 100% 0, 100% 100%);">
+                  </div>
+                  <div class="absolute inset-0 bg-pink-400/30" style="clip-path: polygon(50% 50%, 100% 100%, 0 100%);">
+                  </div>
+                  <div class="absolute inset-0 bg-yellow-200/30" style="clip-path: polygon(50% 50%, 0 100%, 0 0);">
+                  </div>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center z-10">
+                  <div
+                    class="size-16 bg-white rounded-full border-4 border-slate-900 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-yellow-500 text-3xl font-black">auto_awesome</span>
+                  </div>
+                </div>
+              </div>
+
+              <button id="reset-spin-button"
+                class="w-full bg-slate-900 text-white px-8 py-6 rounded-3xl font-black text-2xl shadow-[8px_8px_0px_0px_rgba(255,217,61,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-4 back-to-home">
+                <span class="material-symbols-outlined text-3xl">autorenew</span>
+                <span>Spin Again</span>
+              </button>
+            </div>
+
+            <!-- Bond Meter Promo Card -->
+            <div onclick="showView('view-bond-meter')"
+              class="level-card p-10 rounded-[2.5rem] bg-white border-4 border-slate-100 hover:border-blue-400 transition-all cursor-pointer group relative overflow-hidden">
+              <div
+                class="absolute -right-6 -bottom-6 size-32 bg-blue-100 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity">
+              </div>
+              <div class="flex items-center gap-6 relative z-10">
+                <div
+                  class="size-16 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center border-2 border-blue-100 group-hover:scale-110 transition-transform shadow-sm">
+                  <span class="material-symbols-outlined text-3xl">monitor_heart</span>
+                </div>
+                <div>
+                  <h3 class="text-xl font-black text-slate-900 leading-tight mb-1">Bond Meter</h3>
+                  <p class="text-sm font-bold text-slate-500 group-hover:text-blue-500 transition-colors">Check
+                    relationship health &rarr;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: BLOG LIST -->
+    <main id="view-blog" class="view hidden relative bg-hub-bg min-h-screen">
+      <div class="max-w-6xl mx-auto px-6 pt-10 pb-20">
+        <div class="flex justify-start mb-8">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+        <div class="text-center mb-16">
+          <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">The Journal</h1>
+          <p class="text-slate-500 font-bold text-xl">Scientific insights & heartfelt stories about human connection.</p>
+        </div>
+        
+        <div id="blog-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <!-- Posts injected via JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: BLOG ARTICLE -->
+    <main id="view-article" class="view hidden relative bg-white min-h-screen">
+      <div class="max-w-3xl mx-auto px-6 py-12">
+        <button onclick="openBlog()" class="mb-12 text-slate-400 font-black text-xs uppercase tracking-[0.2em] hover:text-blue-500 transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          Back to Journal
+        </button>
+
+        <div id="article-content-area">
+          <span id="article-category" class="bg-blue-50 text-blue-500 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 inline-block">Category</span>
+          <h1 id="article-title" class="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight mb-8">Article Title</h1>
+          
+          <div class="flex items-center gap-4 mb-12 border-b border-slate-100 pb-8">
+            <div class="size-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+              <span class="material-symbols-outlined">person</span>
+            </div>
+            <div>
+              <p id="article-author" class="text-sm font-black text-slate-900">CareActs Team</p>
+              <p id="article-date" class="text-xs font-bold text-slate-400">April 10, 2026 • 5 min read</p>
+            </div>
+          </div>
+
+          <div id="article-header-image" class="w-full h-80 md:h-[450px] rounded-[2.5rem] bg-slate-100 mb-12 overflow-hidden border-8 border-white shadow-xl">
+             <img src="" class="w-full h-full object-cover">
+          </div>
+
+          <div id="article-body" class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed">
+            <!-- Content injected via JS -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: MY SAVED IDEAS -->
+    <main id="view-saved" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20">
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">My Saved Ideas</h1>
+            <p class="text-slate-500 font-bold mt-2">Your personal collection of care acts.</p>
+          </div>
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back
+          </button>
+        </div>
+        <div id="saved-empty-state" class="hidden flex-col items-center justify-center gap-6 py-24 text-center">
+          <div class="size-24 rounded-3xl bg-pink-50 text-pink-300 flex items-center justify-center">
+            <span class="material-symbols-outlined text-5xl">favorite_border</span>
+          </div>
+          <h2 class="text-2xl font-black text-slate-700">No saved ideas yet</h2>
+          <p class="text-slate-500 font-bold max-w-sm">Spin the wheel and hit "Save Idea" on anything that inspires you!</p>
+          <button onclick="showView('view-home')" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform">Go Spin the Wheel</button>
+        </div>
+        <div id="saved-ideas-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        <div id="saved-clear-row" class="hidden mt-10 flex justify-end">
+          <button id="clear-all-btn" class="text-slate-400 font-bold hover:text-red-400 transition-colors flex items-center gap-2 text-sm uppercase tracking-widest">
+            <span class="material-symbols-outlined text-lg">delete_sweep</span>
+            Clear All
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: BOND HEALTH METER -->
+
+    <main id="view-bond-meter" class="view hidden relative overflow-hidden">
+
+      <!-- Background Design: Orange Blobs & Stars -->
+      <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+        <!-- Top Left Blob -->
+        <svg class="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] opacity-90 daisy-float" viewBox="0 0 200 200">
+          <path d="M45,25 Q105,10 165,45 T185,125 Q145,185 65,165 T25,85 Z" fill="#FF9F1C" />
+          <path d="M45,25 Q105,10 165,45 T185,125 Q145,185 65,165 T25,85 Z" fill="none" stroke="#2C2C2C"
+            stroke-width="3" stroke-linecap="round" />
+        </svg>
+
+        <!-- Bottom Right Blob -->
+        <svg class="absolute -bottom-[15%] -right-[15%] w-[60%] h-[60%] opacity-90 daisy-float-alt"
+          viewBox="0 0 200 200">
+          <path d="M160,30 Q100,10 40,50 T30,130 Q80,190 150,160 T180,70 Z" fill="#FF9F1C" />
+          <path d="M160,30 Q100,10 40,50 T30,130 Q80,190 150,160 T180,70 Z" fill="none" stroke="#2C2C2C"
+            stroke-width="3" stroke-linecap="round" />
+        </svg>
+
+        <!-- Scattered Stars -->
+        <div class="absolute top-[15%] right-[20%] text-yellow-400 animate-pulse text-4xl">★</div>
+        <div class="absolute bottom-[20%] left-[15%] text-slate-800 animate-bounce text-2xl">✦</div>
+        <div class="absolute top-[40%] left-[10%] text-orange-300 text-5xl opacity-50">★</div>
+        <div class="absolute bottom-[40%] right-[10%] text-yellow-500 text-3xl opacity-60">✦</div>
+      </div>
+
+      <div class="max-w-[1400px] mx-auto w-full px-6 pt-6 pb-20 relative z-10">
+        <div class="max-w-4xl mx-auto">
+
+          <!-- Header -->
+          <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">Bond Health Meter</h1>
+            <p class="text-lg text-slate-600 font-bold">Check the pulse of your connection.</p>
+          </div>
+
+          <!-- Step 1: Select Relationship -->
+          <div id="bond-step-select" class="block">
+            <h3 class="text-center text-sm font-black uppercase tracking-widest text-slate-400 mb-8">Select Relationship
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Father / Mother">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-blue-500 transition-colors">family_star</span>
+                <span class="font-bold text-slate-700">Father / Mother</span>
+              </button>
+
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Brother / Sister">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-pink-500 transition-colors">diversity_2</span>
+                <span class="font-bold text-slate-700">Brother / Sister</span>
+              </button>
+
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Son / Daughter">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-purple-500 transition-colors">child_care</span>
+                <span class="font-bold text-slate-700">Son / Daughter</span>
+              </button>
+
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Partner">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-red-500 transition-colors">favorite</span>
+                <span class="font-bold text-slate-700">Partner / Crush</span>
+              </button>
+
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Best Friend">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-yellow-500 transition-colors">diversity_3</span>
+                <span class="font-bold text-slate-700">Best Friend</span>
+              </button>
+
+              <button
+                class="bond-relation-btn p-6 rounded-3xl bg-white border-4 border-[#FF9F1C] hover:border-orange-500 hover:shadow-lg transition-all flex flex-col items-center gap-3 group"
+                data-relation="Boss">
+                <span
+                  class="material-symbols-outlined text-4xl text-orange-400 group-hover:text-slate-600 transition-colors">work</span>
+                <span class="font-bold text-slate-700">Boss / Manager</span>
+              </button>
+            </div>
+
+            <div class="mt-12 text-center">
+              <button onclick="showView('view-home')"
+                class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center justify-center gap-2 mx-auto uppercase tracking-widest text-sm">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back to Home
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Questionnaire -->
+          <div id="bond-step-quiz" class="hidden max-w-2xl mx-auto">
+            <div class="mb-8">
+              <div class="flex justify-between text-sm font-bold text-slate-400 mb-2">
+                <span>Question <span id="bond-q-current">1</span>/8</span>
+                <span id="bond-progress-text">0%</span>
+              </div>
+              <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                <div id="bond-progress-bar" class="h-full bg-blue-500 transition-all duration-300" style="width: 0%">
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] p-10 shadow-xl border-4 border-[#FF9F1C] relative overflow-hidden">
+              <h3 id="bond-question-text" class="text-2xl font-black text-slate-900 mb-8 leading-tight">Question goes
+                here?</h3>
+              <div id="bond-options-container" class="flex flex-col gap-4">
+                <!-- Options injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Result -->
+          <div id="bond-step-result" class="hidden text-center max-w-xl mx-auto">
+            <div class="relative size-64 mx-auto mb-8 flex items-center justify-center">
+              <!-- Circular Progress (Simple SVG implementation) -->
+              <svg class="size-full transform -rotate-90">
+                <circle cx="128" cy="128" r="110" stroke="#f1f5f9" stroke-width="20" fill="none" />
+                <circle id="bond-score-circle" cx="128" cy="128" r="110" stroke="#3b82f6" stroke-width="20" fill="none"
+                  stroke-dasharray="691" stroke-dashoffset="691" stroke-linecap="round"
+                  class="transition-all duration-1000 ease-out" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="bond-final-score" class="text-6xl font-black text-slate-900">0</span>
+                <span class="text-slate-400 font-bold uppercase text-xs tracking-widest">Score</span>
+              </div>
+            </div>
+
+            <h2 id="bond-result-title" class="text-3xl font-black text-slate-900 mb-4">Solid Bond!</h2>
+            <p id="bond-result-msg" class="text-lg text-slate-600 font-medium mb-10">Your connection is strong, but
+              there's always room to grow deeper.</p>
+
+            <button onclick="location.reload()"
+              class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform">
+              Back to Home
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: RESET ME -->
+    <main id="view-reset-me" class="view relative overflow-hidden">
+
+      <!-- Abstract Organic Blob Background -->
+      <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+
+        <!-- Top Left Shape -->
+        <svg class="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] daisy-float" viewBox="0 0 200 200">
+          <path d="M40,20 Q100,5 160,40 T180,120 Q140,180 60,160 T20,80 Z" fill="#F4C430" />
+          <path d="M45,25 Q105,10 165,45 T185,125 Q145,185 65,165 T25,85 Z" fill="none" stroke="#2C2C2C"
+            stroke-width="3" stroke-linecap="round" class="daisy-float-alt" />
+        </svg>
+
+        <!-- Top Right Shape -->
+        <svg class="absolute -top-[5%] -right-[5%] w-[40%] h-[60%] daisy-float-alt" viewBox="0 0 200 200">
+          <path d="M160,30 Q100,10 40,50 T30,130 Q80,190 150,160 T180,70 Z" fill="#FFD700" opacity="0.9" />
+          <path d="M155,35 Q95,15 35,55 T25,135 Q75,195 145,165 T175,75 Z" fill="none" stroke="#2C2C2C" stroke-width="3"
+            stroke-linecap="round" class="daisy-float" />
+        </svg>
+
+        <!-- Bottom Left Shape -->
+        <svg class="absolute -bottom-[15%] -left-[5%] w-[45%] h-[50%] daisy-float-alt" viewBox="0 0 200 200">
+          <path d="M30,160 Q10,80 60,40 T150,50 Q180,120 120,170 T30,160 Z" fill="#F4C430" />
+          <path d="M35,165 Q15,85 65,45 T155,55 Q185,125 125,175 T35,165 Z" fill="none" stroke="#2C2C2C"
+            stroke-width="4" stroke-linecap="round" class="daisy-float" />
+        </svg>
+
+        <!-- Bottom Right Shape -->
+        <svg class="absolute -bottom-[10%] -right-[10%] w-[55%] h-[45%] daisy-float" viewBox="0 0 200 200">
+          <path d="M170,150 Q90,180 30,130 T40,40 Q110,10 160,70 T170,150 Z" fill="#FFD700" opacity="0.8" />
+          <path d="M165,145 Q85,175 25,125 T35,35 Q105,5 155,65 T165,145 Z" fill="none" stroke="#2C2C2C"
+            stroke-width="3" stroke-linecap="round" class="daisy-float-alt" />
+        </svg>
+
+        <!-- Scattered Vibe Icons -->
+        <div class="absolute top-[20%] left-[25%] opacity-10 rotate-12">
+          <span class="material-symbols-outlined text-4xl text-slate-900">psychology</span>
+        </div>
+        <div class="absolute top-[18%] right-[28%] opacity-10 -rotate-12">
+          <span class="material-symbols-outlined text-5xl text-slate-900">wb_sunny</span>
+        </div>
+        <div class="absolute bottom-[30%] left-[10%] opacity-10 rotate-45">
+          <span class="material-symbols-outlined text-4xl text-slate-900">favorite</span>
+        </div>
+        <div class="absolute bottom-[20%] right-[22%] opacity-10 -rotate-6">
+          <span class="material-symbols-outlined text-6xl text-slate-900">spa</span>
+        </div>
+        <div class="absolute top-[45%] left-[5%] opacity-10 rotate-12">
+          <span class="material-symbols-outlined text-3xl text-slate-900">bolt</span>
+        </div>
+        <div class="absolute top-[35%] right-[8%] opacity-10 -rotate-45">
+          <span class="material-symbols-outlined text-4xl text-slate-900">music_note</span>
+        </div>
+
+      </div>
+
+      <div class="max-w-[1400px] mx-auto w-full px-6 pt-6 pb-20 relative z-10">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 mb-6 tracking-tight">Reset Your Vibe</h1>
+            <p class="text-lg md:text-xl text-slate-600 font-bold max-w-2xl mx-auto">Relationship hurdles are heavy.
+              Pick
+              how you’re feeling, and we’ll help you pivot.</p>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20" id="mood-grid">
+            <!-- Mood bubbles injected here -->
+          </div>
+
+          <div id="reset-result-area" class="hidden opacity-0 transition-all duration-500">
+            <div
+              class="level-card p-12 rounded-[3.5rem] border-8 border-slate-900 bg-white relative overflow-hidden mb-20">
+              <div class="absolute -top-10 -right-10 size-40 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
+
+              <div class="flex flex-col md:flex-row gap-10 items-center">
+                <div
+                  class="size-24 flex-shrink-0 bg-pink-400 text-white rounded-3xl flex items-center justify-center shadow-lg rotate-[-8deg]">
+                  <span id="reset-icon" class="material-symbols-outlined text-5xl">auto_awesome</span>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                  <span
+                    class="bg-blue-100 text-blue-500 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 inline-block">Actionable
+                    Idea</span>
+                  <h2 id="reset-tip-text" class="text-2xl md:text-3xl font-black text-slate-900 leading-tight"></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center gap-6">
+            <button id="get-reset-idea-btn"
+              class="group bg-slate-900 text-white px-12 py-6 rounded-3xl font-black text-2xl shadow-[8px_8px_0px_0px_rgba(251,207,232,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-4">
+              <span class="material-symbols-outlined text-3xl">restart_alt</span>
+              <span>Get Reset Idea</span>
+            </button>
+            <p id="mood-instruction" class="text-sm font-bold text-slate-400 italic">Select a mood above to unlock a
+              reset.</p>
+
+            <button
+              class="mt-8 text-slate-500 font-black text-sm uppercase tracking-widest hover:text-pink-400 transition-colors flex items-center gap-2 back-to-home">
+              <span class="material-symbols-outlined">arrow_back</span>
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: HOME / GENERATOR -->
+    <main id="view-home" class="view active">
+      <div class="max-w-[1400px] mx-auto w-full px-6 py-12">
+        <div class="text-center mb-16">
+          <h1 class="text-5xl md:text-7xl font-black leading-tight tracking-tight mb-8 text-slate-900">
+            Strengthen your bonds,<br /><span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-pink-400 to-yellow-400">one idea
+              at a time.</span>
+          </h1>
+          <p class="text-lg md:text-xl font-medium text-slate-600 max-w-2xl mx-auto mb-10">
+            Discover tailored activities and gestures to deepen your most important relationships. Select your
+            preferences below to spin the wheel of connection.
+          </p>
+          <div class="h-2 w-48 mx-auto level-indicator rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+          <div class="level-card rounded-lg p-8 relative flex flex-col h-[600px]">
+            <div
+              class="absolute -top-5 -left-5 size-14 bg-blue-400 text-white rounded-2xl flex items-center justify-center font-black text-2xl rotate-[-12deg] shadow-lg border-4 border-white">
+              1</div>
+            <h2 class="text-2xl font-black mb-6 text-slate-900">Who are you connecting with?</h2>
+            <div class="flex-1 overflow-y-auto custom-scrollbar pr-2" id="relation-container"></div>
+          </div>
+
+          <div class="level-card rounded-lg p-8 relative flex flex-col h-[600px]">
+            <div
+              class="absolute -top-5 -left-5 size-14 bg-pink-400 text-white rounded-2xl flex items-center justify-center font-black text-2xl rotate-[8deg] shadow-lg border-4 border-white">
+              2</div>
+            <h2 class="text-2xl font-black mb-6 text-slate-900">What's the vibe?</h2>
+            <div class="flex flex-col gap-4">
+              <button
+                class="vibe-btn w-full py-5 rounded-3xl border-4 border-slate-100 font-black text-lg hover:border-pink-400 hover:text-pink-500 transition-all bg-white"
+                data-vibe="Bonding">Bonding</button>
+              <button
+                class="vibe-btn w-full py-5 rounded-3xl border-4 border-slate-100 font-black text-lg hover:border-pink-400 hover:text-pink-500 transition-all bg-white"
+                data-vibe="Appreciation">Appreciation</button>
+              <button
+                class="vibe-btn w-full py-5 rounded-3xl border-4 border-slate-100 font-black text-lg hover:border-pink-400 hover:text-pink-500 transition-all bg-white"
+                data-vibe="Fun">Fun</button>
+              <button
+                class="vibe-btn w-full py-5 rounded-3xl border-4 border-slate-100 font-black text-lg hover:border-pink-400 hover:text-pink-500 transition-all bg-white"
+                data-vibe="Conversation">Conversation</button>
+              <button
+                class="vibe-btn w-full py-5 rounded-3xl border-4 border-slate-100 font-black text-lg hover:border-pink-400 hover:text-pink-500 transition-all bg-white"
+                data-vibe="Projects">Projects</button>
+            </div>
+
+          </div>
+
+          <div class="level-card rounded-[1.5rem] p-8 relative flex flex-col h-[600px]">
+            <div
+              class="absolute -top-5 -left-5 size-14 bg-yellow-400 text-white rounded-2xl flex items-center justify-center font-black text-2xl rotate-[-4deg] shadow-lg border-4 border-white">
+              3</div>
+            <h2 class="text-2xl font-black mb-6 text-slate-900">How much energy do you have?</h2>
+            <div class="flex-1 flex flex-col justify-center gap-12">
+              <div class="relative px-2">
+                <input
+                  class="w-full h-8 bg-slate-100 rounded-full appearance-none cursor-pointer accent-yellow-400 border border-slate-200"
+                  id="effort-range" max="3" min="1" step="1" type="range" value="1" />
+                <div class="flex justify-between mt-6 text-[10px] font-black uppercase tracking-tighter text-slate-500">
+                  <span class="bg-slate-100 px-3 py-1 rounded-full">Small Gestures</span>
+                  <span id="effort-label-med"
+                    class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full border border-yellow-200">Medium
+                    Effort</span>
+                  <span class="bg-slate-100 px-3 py-1 rounded-full">Big Adventure</span>
+                </div>
+              </div>
+              <div class="bg-yellow-50 rounded-3xl p-6 border-2 border-dashed border-yellow-300">
+                <p class="text-sm font-bold text-yellow-700 italic text-center">
+                  "Science shows that intentional variety in shared activities leads to deeper neural connections and
+                  long-term satisfaction."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="relative max-w-4xl mx-auto bg-white rounded-xl p-12 shadow-2xl overflow-hidden border-8 border-slate-900">
+          <div class="absolute inset-0 bg-yellow-400/5 pointer-events-none"></div>
+          <div class="flex flex-col lg:flex-row items-center gap-16 relative z-10">
+            <div class="flex-1 text-center lg:text-left">
+              <h3 class="text-4xl font-black mb-6 text-slate-900 leading-tight">Ready for your activity?</h3>
+              <p class="text-slate-600 font-medium mb-10 max-w-md mx-auto lg:mx-0">
+                We've curated dozens of ideas based on your selections. Spin the wheel to get a personalized
+                recommendation!
+              </p>
+              <button id="spin-button"
+                class="group w-full lg:w-auto bg-slate-900 text-white px-12 py-6 rounded-3xl font-black text-2xl shadow-[8px_8px_0px_0px_rgba(255,217,61,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-4">
+                <span
+                  class="material-symbols-outlined text-3xl group-hover:rotate-180 transition-transform duration-500">refresh</span>
+                Spin for Ideas
+              </button>
+            </div>
+            <div class="relative">
+              <div class="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
+                <div class="w-10 h-14 bg-slate-900" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
+              </div>
+              <div
+                class="size-64 md:size-80 rounded-full border-[12px] border-slate-900 shadow-2xl relative overflow-hidden wheel-spin flex items-center justify-center transition-transform duration-[3000ms]"
+                id="wheel" style="transition-timing-function: cubic-bezier(0.15, 0, 0.15, 1);">
+                <div class="size-24 rounded-full bg-slate-900 shadow-2xl flex items-center justify-center z-20">
+                  <span class="material-symbols-outlined text-yellow-400 text-4xl font-bold">auto_awesome</span>
+                </div>
+                <!-- Content injected via CSS or dynamic symbols -->
+                <div class="absolute inset-0 flex items-center justify-center text-slate-900/40 pointer-events-none">
+                  <div class="absolute top-10 rotate-0"><span
+                      class="material-symbols-outlined text-4xl">celebration</span></div>
+                  <div class="absolute right-10 rotate-90"><span
+                      class="material-symbols-outlined text-4xl">restaurant</span></div>
+                  <div class="absolute bottom-10 rotate-180"><span
+                      class="material-symbols-outlined text-4xl">hiking</span></div>
+                  <div class="absolute left-10 rotate-270"><span class="material-symbols-outlined text-4xl">draw</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DISCOVERY LAB SECTION -->
+      <div class="mt-32 mb-20 px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-center justify-between mb-12 border-b-4 border-white pb-6">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight">Discovery Lab</h2>
+            <span
+              class="bg-blue-400 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">New
+              Tools</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Reset Me Card -->
+            <div id="card-reset-me"
+              class="bg-white/60 backdrop-blur-md px-8 py-10 rounded-[3.5rem] border-2 border-white shadow-xl flex flex-col items-center text-center group cursor-pointer hover:translate-y-[-8px] transition-all duration-300">
+              <div
+                class="size-20 rounded-[2rem] bg-pink-400 text-white flex items-center justify-center mb-6 shadow-lg transition-transform group-hover:scale-110">
+                <span class="material-symbols-outlined text-4xl">restart_alt</span>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">Reset Me</h3>
+              <p class="text-slate-600 font-bold leading-relaxed">Process heavy relationship moments and get a vibe
+                reset ideas instantly.</p>
+            </div>
+
+            <!-- Bond Meter Card -->
+            <div id="card-bond-meter" onclick="showView('view-bond-meter')"
+              class="bg-white/60 backdrop-blur-md px-8 py-10 rounded-[3.5rem] border-2 border-white shadow-xl flex flex-col items-center text-center group cursor-pointer hover:translate-y-[-8px] transition-all duration-300">
+              <div
+                class="size-20 rounded-[2rem] bg-blue-400 text-white flex items-center justify-center mb-6 shadow-lg transition-transform group-hover:scale-110">
+                <span class="material-symbols-outlined text-4xl">favorite</span>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">Bond Health</h3>
+              <p class="text-slate-600 font-bold leading-relaxed">Track the pulse of your connection with our new meter.
+              </p>
+            </div>
+
+            <!-- Weekend Card -->
+            <div id="card-weekend"
+              class="bg-white/60 backdrop-blur-md px-8 py-10 rounded-[3.5rem] border-2 border-white shadow-xl flex flex-col items-center text-center group opacity-80 hover:opacity-100 cursor-not-allowed transition-all">
+              <div
+                class="size-20 rounded-[2rem] bg-yellow-400 text-white flex items-center justify-center mb-6 shadow-lg">
+                <span class="material-symbols-outlined text-4xl">weekend</span>
+              </div>
+              <h3 class="text-2xl font-black mb-4 text-slate-900">Weekend Plans</h3>
+              <p class="text-slate-600 font-bold leading-relaxed mb-4">Curated adventures for your upcoming free time.
+              </p>
+              <span
+                class="text-[10px] font-black uppercase tracking-widest text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full">Coming
+                Soon</span>
+            </div>
+          </div>
+    </main>
+
+    <!-- VIEW: ABOUT US -->
+    <main id="view-about" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+        <div class="flex items-center justify-between mb-12">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+
+        <div class="level-card p-10 md:p-16 rounded-[3rem] bg-white/80 backdrop-blur-md border-4 border-white shadow-2xl relative overflow-hidden">
+          <!-- Background Blobs -->
+          <div class="absolute -top-24 -right-24 size-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+          <div class="absolute -bottom-24 -left-24 size-64 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
+
+          <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">About CareActs</h1>
+            <p class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-pink-500 mb-12">Small Acts. Stronger Bonds.</p>
+
+            <div class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed space-y-8">
+              <p>In today’s fast-paced, digital world, real human connection is quietly fading. We scroll more, talk less, and often take our closest relationships for granted.</p>
+
+              <p><strong class="text-slate-900 font-black">CareActs</strong> exists to bring that connection back.</p>
+
+              <p>We are a relationship and self-improvement platform dedicated to helping people build stronger bonds—with family, friends, partners, and even the people around them. Whether you feel distant, disconnected, or simply want to improve your relationships, CareActs gives you simple, practical ways to reconnect.</p>
+
+              <div class="pt-8 border-t border-slate-100">
+                <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">What We Do</h3>
+                <p>CareActs focuses on <strong class="text-slate-900 font-bold">actionable ideas</strong> that make relationships better, including:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-500 mt-1">check_circle</span>
+                    <span>Creative bonding activities for family, friends, and partners</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-pink-500 mt-1">check_circle</span>
+                    <span>Meaningful ways to show appreciation and care</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-500 mt-1">check_circle</span>
+                    <span>Conversation starters to deepen emotional connection</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-400 mt-1">check_circle</span>
+                    <span>Practical advice for handling relationship struggles</span>
+                  </li>
+                </ul>
+                <p class="mt-8">We also help you navigate difficult emotions—like feeling ignored, misunderstood, lonely, or unappreciated—through thoughtful guidance and self-reflection tools like the <strong class="text-slate-900 font-bold">Bond Health Meter</strong>.</p>
+              </div>
+
+              <div class="pt-8 border-t border-slate-100">
+                <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Why CareActs Exists</h3>
+                <p>CareActs started from a simple question:<br>
+                <em class="text-blue-500 font-bold">“What small thing can I do today to make someone feel valued?”</em></p>
+                <p>In a world where relationships are often neglected, we believe <strong class="text-slate-900 font-bold">intentional actions matter more than big gestures</strong>. Even the smallest act of care can rebuild trust, strengthen connection, and bring people closer.</p>
+              </div>
+
+              <div class="pt-8 border-t border-slate-100">
+                <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">What We Believe</h3>
+                <p>We believe that:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-pink-400 mt-1">favorite</span>
+                    <span>Strong relationships are built, not assumed</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-400 mt-1">auto_awesome</span>
+                    <span>Consistent care creates lasting bonds</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-500 mt-1">volunteer_activism</span>
+                    <span>Kindness and effort can transform lives</span>
+                  </li>
+                </ul>
+                <p class="mt-8">When people invest in their relationships, everything changes—homes feel warmer, friendships grow deeper, and life feels less lonely.</p>
+              </div>
+
+              <div class="pt-8 border-t-4 border-slate-900 pt-12">
+                <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Be Part of It</h3>
+                <p>If you’re here, it means you care about your relationships—and that’s the most important step.</p>
+                <p>Explore ideas, save what resonates with you, and share it with the people who matter most.</p>
+                <p class="text-2xl font-black text-slate-900 mt-8">Because better relationships don’t just happen—<br>
+                <span class="text-pink-500 text-3xl">they are created through care.</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: PRIVACY POLICY -->
+    <main id="view-privacy" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+        <div class="flex items-center justify-between mb-12">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+
+        <div class="level-card p-10 md:p-16 rounded-[3rem] bg-white/80 backdrop-blur-md border-4 border-white shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 size-64 bg-yellow-100 rounded-full blur-3xl opacity-40"></div>
+          <div class="absolute -bottom-24 -left-24 size-64 bg-blue-100 rounded-full blur-3xl opacity-40"></div>
+
+          <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">Privacy Policy</h1>
+            <p class="text-slate-400 font-black uppercase tracking-widest text-sm mb-12">Last Updated: 26 April, 2026</p>
+
+            <div class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed space-y-12">
+              <p>At <strong class="text-slate-900 font-black">CareActs</strong>, we are committed to protecting your privacy and maintaining transparency about how your information is collected and used. This Privacy Policy outlines our practices regarding data collection, usage, and protection when you access our website.</p>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">1. Information We Collect</h2>
+                <p>We may collect both personal and non-personal information depending on how you interact with our website.</p>
+                
+                <h3 class="text-xl font-black text-slate-800 mt-8 mb-4">Personal Information</h3>
+                <p>We collect personal information only when voluntarily provided by you, such as:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-blue-400"></span> Name and email address (e.g., when you contact us)</li>
+                </ul>
+
+                <h3 class="text-xl font-black text-slate-800 mt-8 mb-4">Non-Personal Information</h3>
+                <p>We may automatically collect certain non-identifiable information, including:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-pink-400"></span> Browser type and device information</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-pink-400"></span> Pages visited and time spent on the website</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-pink-400"></span> General geographic location (non-precise)</li>
+                </ul>
+                <p class="mt-4">This information is used to better understand user behavior and improve website performance.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">2. How We Use Your Information</h2>
+                <p>We use the collected information to:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-yellow-500"></span> Improve website functionality, content, and user experience</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-yellow-500"></span> Respond to inquiries or communications</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-yellow-500"></span> Analyze website traffic and user behavior</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-yellow-500"></span> Maintain website performance and security</li>
+                </ul>
+                <p class="mt-8 font-black text-slate-900">We do not sell, trade, or rent your personal information to third parties.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">3. Cookies and Tracking Technologies</h2>
+                <p>CareActs uses cookies and similar tracking technologies to enhance user experience and analyze website traffic.</p>
+                <p class="mt-4 font-bold text-slate-800">Cookies help us:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-blue-500"></span> Recognize returning visitors</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-blue-500"></span> Understand user preferences</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-blue-500"></span> Improve overall website performance</li>
+                </ul>
+                <p class="mt-4 italic">You can choose to disable cookies through your browser settings; however, some features of the website may not function properly.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">4. Third-Party Services and Advertising</h2>
+                <p>We may use third-party services to support analytics and advertising, including:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-500">analytics</span>
+                    <span><strong class="text-slate-900">Google Analytics</strong> (for traffic analysis and performance tracking)</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-600">ads_click</span>
+                    <span><strong class="text-slate-900">Google AdSense</strong> (for displaying advertisements, now or in the future)</span>
+                  </li>
+                </ul>
+                <p class="mt-8">These services may use cookies, web beacons, and similar technologies to collect information such as your IP address, browsing activity, and interactions with ads.</p>
+                <p class="mt-4">Third-party vendors, including Google, may use cookies (such as the DoubleClick cookie) to serve ads based on your visits to this and other websites.</p>
+                <p class="mt-4">You can learn more about how Google uses data by visiting: <a href="https://policies.google.com/technologies/ads" target="_blank" class="text-blue-500 underline">policies.google.com/technologies/ads</a></p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">5. Third-Party Privacy Policies</h2>
+                <p>CareActs’ Privacy Policy does not apply to other advertisers or external websites. We encourage you to review the respective Privacy Policies of third-party services for more detailed information about their practices.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">6. Data Security</h2>
+                <p>We implement reasonable technical and organizational measures to protect your information from unauthorized access, misuse, or disclosure.</p>
+                <p class="mt-4">However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">7. Your Rights</h2>
+                <p>Depending on your location, you may have the right to:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-slate-900"></span> Access the personal data we hold about you</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-slate-900"></span> Request correction or deletion of your data</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-slate-900"></span> Withdraw consent where applicable</li>
+                </ul>
+                <p class="mt-4">To exercise these rights, please contact us directly.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">8. Children’s Privacy</h2>
+                <p>Protecting children’s privacy is important to us. CareActs does not knowingly collect any Personal Identifiable Information from children under the age of 13.</p>
+                <p class="mt-4">If you believe that a child has provided personal information on our website, please contact us immediately, and we will take prompt steps to remove such information from our records.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">9. Updates to This Privacy Policy</h2>
+                <p>We reserve the right to update or modify this Privacy Policy at any time. Any changes will be posted on this page with an updated revision date.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">10. Consent</h2>
+                <p>By using this website, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.</p>
+              </div>
+
+              <div class="pt-12 border-t-4 border-slate-900">
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">11. Contact Information</h2>
+                <p>If you have any questions or concerns regarding this Privacy Policy, you may contact us at:</p>
+                <p class="mt-6">
+                  <a href="mailto:anikanawmi35@gmail.com" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined">mail</span>
+                    anikanawmi35@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: TERMS AND CONDITIONS -->
+    <main id="view-terms" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+        <div class="flex items-center justify-between mb-12">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+
+        <div class="level-card p-10 md:p-16 rounded-[3rem] bg-white/80 backdrop-blur-md border-4 border-white shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 size-64 bg-pink-100 rounded-full blur-3xl opacity-40"></div>
+          <div class="absolute -bottom-24 -left-24 size-64 bg-yellow-100 rounded-full blur-3xl opacity-40"></div>
+
+          <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">Terms & Conditions</h1>
+            <p class="text-slate-400 font-black uppercase tracking-widest text-sm mb-12">Last Updated: 26 April, 2026</p>
+
+            <div class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed space-y-12">
+              <p>Welcome to <strong class="text-slate-900 font-black">CareActs</strong>. These Terms and Conditions outline the rules and regulations for the use of our website. By accessing or using this website, you agree to comply with and be bound by these terms. If you do not agree with any part of these Terms and Conditions, please discontinue use of the website.</p>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">1. Use of the Website</h2>
+                <p>The content provided on CareActs is intended for general informational and educational purposes only. You agree to use this website lawfully and in a manner that does not infringe upon the rights or restrict the use of this website by others.</p>
+                
+                <p class="mt-4 font-bold text-slate-800">You agree not to:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-red-400">block</span>
+                    <span>Use the website in any way that may damage, disable, or impair its functionality</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-red-400">no_encryption</span>
+                    <span>Attempt to gain unauthorized access to any part of the website</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-red-400">running_with_errors</span>
+                    <span>Engage in any activity that disrupts or interferes with the website’s operation</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">2. Intellectual Property Rights</h2>
+                <p>Unless otherwise stated, all content on CareActs—including text, design, graphics, and materials—is the intellectual property of CareActs and is protected by applicable copyright and intellectual property laws.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                  <div class="bg-blue-50/50 p-6 rounded-3xl border-2 border-blue-100">
+                    <h4 class="font-black text-blue-600 uppercase text-xs tracking-widest mb-4">You May</h4>
+                    <ul class="list-none space-y-2">
+                      <li class="flex items-center gap-2 text-sm font-bold text-slate-700">
+                        <span class="material-symbols-outlined text-blue-500 text-sm">check</span>
+                        Access and use content for personal purposes
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="bg-pink-50/50 p-6 rounded-3xl border-2 border-pink-100">
+                    <h4 class="font-black text-pink-600 uppercase text-xs tracking-widest mb-4">You May Not</h4>
+                    <ul class="list-none space-y-2">
+                      <li class="flex items-center gap-2 text-sm font-bold text-slate-700">
+                        <span class="material-symbols-outlined text-pink-500 text-sm">close</span>
+                        Copy or redistribute for commercial use
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">3. User Communications</h2>
+                <p>If you contact us or submit any form of communication:</p>
+                <ul class="list-none space-y-2 mt-4">
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-slate-900"></span> You agree that the information provided is accurate and lawful</li>
+                  <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-slate-900"></span> You grant us the right to use your feedback to improve our website and services</li>
+                </ul>
+                <p class="mt-4 italic">We will handle your personal information in accordance with our Privacy Policy.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">4. Disclaimer of Warranties</h2>
+                <p>All content on CareActs is provided <span class="bg-slate-100 px-2 py-1 rounded font-bold">“as is”</span> and <span class="bg-slate-100 px-2 py-1 rounded font-bold">“as available,”</span> without warranties of any kind, either express or implied.</p>
+                <p class="mt-4">We make no representations or warranties regarding:</p>
+                <ul class="list-none space-y-2 mt-4 text-slate-500 italic">
+                  <li>— The accuracy, completeness, or reliability of the content</li>
+                  <li>— The availability or uninterrupted operation of the website</li>
+                </ul>
+                <p class="mt-8 font-black text-slate-900 border-l-4 border-yellow-400 pl-4 py-2">Content related to relationships and self-improvement is intended for general guidance only and should not be considered professional advice.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">5. Limitation of Liability</h2>
+                <p>To the fullest extent permitted by law, CareActs shall not be held liable for any direct, indirect, incidental, or consequential damages arising from your use of or inability to use the website.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">6. External Links</h2>
+                <p>CareActs may include links to third-party websites for informational purposes. We do not control or endorse the content, policies, or practices of any external sites and are not responsible for them.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">7. Third-Party Services and Advertising</h2>
+                <p>We may use third-party services, including analytics and advertising providers, to support and monetize the website.</p>
+                <p class="mt-4">These third parties may use cookies and similar technologies to collect data in accordance with their own policies. CareActs does not control or assume responsibility for their data practices.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">8. Modifications to Terms</h2>
+                <p>We reserve the right to update, modify, or replace these Terms and Conditions at any time without prior notice. Continued use of the website after changes are posted constitutes acceptance of those changes.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">9. Termination of Access</h2>
+                <p>We reserve the right to restrict, suspend, or terminate access to the website at our sole discretion, without notice, if we believe a user has violated these Terms and Conditions.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">10. Governing Law</h2>
+                <p>These Terms and Conditions shall be governed and interpreted in accordance with applicable laws. Any disputes arising in connection with these terms shall be subject to the appropriate legal jurisdiction.</p>
+              </div>
+
+              <div class="pt-12 border-t-4 border-slate-900">
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">11. Contact Information</h2>
+                <p>If you have any questions regarding these Terms and Conditions, you may contact us at:</p>
+                <p class="mt-6">
+                  <a href="mailto:anikanawmi35@gmail.com" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined">mail</span>
+                    anikanawmi35@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: DISCLAIMER -->
+    <main id="view-disclaimer" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+        <div class="flex items-center justify-between mb-12">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+
+        <div class="level-card p-10 md:p-16 rounded-[3rem] bg-white/80 backdrop-blur-md border-4 border-white shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 size-64 bg-yellow-100 rounded-full blur-3xl opacity-40"></div>
+          <div class="absolute -bottom-24 -left-24 size-64 bg-pink-100 rounded-full blur-3xl opacity-40"></div>
+
+          <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">Disclaimer</h1>
+            <p class="text-slate-400 font-black uppercase tracking-widest text-sm mb-12">Last Updated: 26 April, 2026</p>
+
+            <div class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed space-y-12">
+              <p>The information provided on <strong class="text-slate-900 font-black">CareActs</strong> is for general informational and educational purposes only. By using this website, you acknowledge and agree to the terms outlined in this Disclaimer.</p>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">1. No Professional Advice</h2>
+                <p>All content on CareActs, including articles, ideas, suggestions, and tools, is provided for general guidance only.</p>
+                <p class="mt-4 font-bold text-slate-800">CareActs does not provide professional advice of any kind, including but not limited to:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-500">medical_services</span>
+                    <span>Medical or health advice</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-pink-500">psychology</span>
+                    <span>Psychological or mental health advice</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-600">gavel</span>
+                    <span>Legal or financial advice</span>
+                  </li>
+                </ul>
+                <p class="mt-8 italic">You should consult a qualified professional for advice tailored to your specific situation.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">2. No Guarantees</h2>
+                <p>While we aim to provide helpful and practical content, CareActs makes no guarantees regarding the effectiveness, accuracy, or outcomes of any information provided.</p>
+                <p class="mt-4">Relationship and self-improvement results may vary significantly based on individual circumstances, effort, and external factors.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">3. Personal Responsibility</h2>
+                <p>By using this website, you acknowledge that you are solely responsible for your actions, decisions, and results.</p>
+                <p class="mt-4 font-black text-slate-900 underline decoration-yellow-400 decoration-4 underline-offset-4">Any reliance you place on the information provided on CareActs is strictly at your own risk.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">4. Accuracy of Information</h2>
+                <p>We make reasonable efforts to ensure that the information on this website is accurate and up to date. However, we make no representations or warranties of any kind, express or implied, regarding the completeness, reliability, or accuracy of the content.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">5. External Links</h2>
+                <p>This website may contain links to third-party websites for your convenience. CareActs does not control, endorse, or assume responsibility for the content, policies, or practices of any external websites.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">6. Advertising and Third-Party Content</h2>
+                <p>CareActs may display advertisements and use third-party services, including analytics and advertising providers (such as Google AdSense).</p>
+                <p class="mt-4">These third parties may use cookies, web beacons, or similar technologies to collect information about your interactions with the website. CareActs does not control or assume responsibility for how these third parties collect or use data.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">7. Limitation of Liability</h2>
+                <p>To the fullest extent permitted by applicable law, CareActs shall not be held liable for any loss or damage, including indirect or consequential loss, arising from the use of this website or reliance on its content.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">8. Consent</h2>
+                <p>By using this website, you acknowledge that you have read, understood, and agreed to this Disclaimer.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">9. Updates</h2>
+                <p>CareActs reserves the right to modify or update this Disclaimer at any time without prior notice. Changes will be effective immediately upon posting on this page.</p>
+              </div>
+
+              <div class="pt-12 border-t-4 border-slate-900">
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">10. Contact Information</h2>
+                <p>If you have any questions regarding this Disclaimer, you may contact us at:</p>
+                <p class="mt-6">
+                  <a href="mailto:anikanawmi35@gmail.com" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined">mail</span>
+                    anikanawmi35@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW: CONTACT US -->
+    <main id="view-contact" class="view hidden relative overflow-hidden bg-hub-bg min-h-screen">
+      <div class="max-w-4xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+        <div class="flex items-center justify-between mb-12">
+          <button onclick="showView('view-home')" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2 uppercase tracking-widest text-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+          </button>
+        </div>
+
+        <div class="level-card p-10 md:p-16 rounded-[3rem] bg-white/80 backdrop-blur-md border-4 border-white shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 size-64 bg-blue-100 rounded-full blur-3xl opacity-40"></div>
+          <div class="absolute -bottom-24 -left-24 size-64 bg-yellow-100 rounded-full blur-3xl opacity-40"></div>
+
+          <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">Contact Us</h1>
+            <p class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-pink-500 mb-12">We're here to listen.</p>
+
+            <div class="prose prose-slate max-w-none text-slate-600 text-lg md:text-xl font-medium leading-relaxed space-y-12">
+              <p>Thank you for visiting <strong class="text-slate-900 font-black">CareActs</strong>.</p>
+              <p>We value your feedback, questions, and suggestions. Whether you would like to share an idea, report an issue, or simply get in touch, we are here to listen.</p>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Get in Touch</h2>
+                <p>If you wish to contact us, please feel free to reach out via email:</p>
+                <p class="mt-8">
+                  <a href="mailto:anikanawmi35@gmail.com" class="bg-slate-900 text-white px-10 py-5 rounded-[2rem] font-black text-xl inline-flex items-center gap-3 hover:scale-105 transition-transform shadow-xl">
+                    <span class="material-symbols-outlined text-2xl">mail</span>
+                    anikanawmi35@gmail.com
+                  </a>
+                </p>
+                <p class="mt-6 text-sm font-bold text-slate-400 uppercase tracking-widest italic">We strive to respond to all inquiries within 24–48 hours.</p>
+              </div>
+
+              <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">How We Can Help</h2>
+                <p>You may contact us regarding:</p>
+                <ul class="list-none space-y-4 mt-6">
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-500">info</span>
+                    <span>General inquiries about our content</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-pink-500">reviews</span>
+                    <span>Feedback or suggestions for improvement</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-600">bug_report</span>
+                    <span>Reporting technical issues or errors</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-400">lightbulb</span>
+                    <span>Sharing ideas or experiences related to relationships and personal growth</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-slate-50 p-8 rounded-[2rem] border-2 border-slate-100 italic">
+                <h3 class="text-xl font-black text-slate-900 mb-4 tracking-tight">Note</h3>
+                <p>Please ensure that the information you provide is accurate so we can respond effectively. While we aim to reply promptly, response times may vary depending on the volume of inquiries.</p>
+              </div>
+
+              <div class="pt-12 border-t-4 border-slate-900">
+                <p class="text-2xl font-black text-slate-900 leading-tight">We appreciate you taking the time to connect with us. <br>
+                <span class="text-blue-500">Your input helps us improve and create more meaningful content for our readers.</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer
+      class="w-full py-12 px-6 lg:px-12 bg-white/50 backdrop-blur-md border-t-4 border-slate-900 flex flex-col md:flex-row justify-between items-center gap-10">
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center gap-3 text-slate-900">
+          <div class="size-8 text-yellow-500">
+            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"></path>
+            </svg>
+          </div>
+          <span class="font-black text-2xl tracking-tighter uppercase">CareActs</span>
+        </div>
+        <p class="text-sm font-bold text-slate-500">Made with heart for better human connections.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-8 text-sm font-black text-slate-600">
+        <a class="hover:text-blue-500 transition-colors cursor-pointer" onclick="event.preventDefault(); openPrivacy();">Privacy</a>
+        <a class="hover:text-pink-500 transition-colors cursor-pointer" onclick="event.preventDefault(); openTerms();">Terms</a>
+        <a class="hover:text-yellow-500 transition-colors cursor-pointer" onclick="event.preventDefault(); openContact();">Contact</a>
+        <a class="hover:text-slate-900 transition-colors cursor-pointer" onclick="event.preventDefault(); openDisclaimer();">Disclaimer</a>
+      </div>
+      <div class="flex gap-4">
+        <button
+          class="size-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined">public</span>
+        </button>
+        <button
+          class="size-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined">mail</span>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-[100] bg-white translate-x-full transition-transform duration-500 flex flex-col p-8 md:hidden">
+    <div class="flex items-center justify-between mb-16">
+      <h2 class="text-2xl font-black tracking-tighter text-slate-900">CareActs</h2>
+      <button id="mobile-menu-close" class="size-12 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors">
+        <span class="material-symbols-outlined text-4xl">close</span>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-8">
+      <a class="text-4xl font-black text-slate-900 hover:text-blue-500 transition-colors flex items-center justify-between group" href="#blog" onclick="event.preventDefault(); openBlog(); toggleMobileMenu(false);">
+        Journal
+        <span class="material-symbols-outlined text-3xl opacity-0 group-hover:opacity-100 translate-x-[-20px] group-hover:translate-x-0 transition-all">arrow_forward</span>
+      </a>
+      <a class="text-4xl font-black text-slate-900 hover:text-blue-500 transition-colors flex items-center justify-between group" href="#about" onclick="event.preventDefault(); openAbout(); toggleMobileMenu(false);">
+        About Us
+        <span class="material-symbols-outlined text-3xl opacity-0 group-hover:opacity-100 translate-x-[-20px] group-hover:translate-x-0 transition-all">arrow_forward</span>
+      </a>
+      <a class="text-4xl font-black text-slate-900 hover:text-pink-500 transition-colors flex items-center justify-between group" href="#saved" onclick="event.preventDefault(); openSavedIdeas(); toggleMobileMenu(false);">
+        My Saved Ideas
+        <span class="material-symbols-outlined text-3xl opacity-0 group-hover:opacity-100 translate-x-[-20px] group-hover:translate-x-0 transition-all">arrow_forward</span>
+      </a>
+    </nav>
+
+    <div class="mt-auto pt-10 border-t-4 border-slate-50">
+      <p class="text-slate-400 font-bold text-sm uppercase tracking-widest mb-4">Connect with us</p>
+      <div class="flex gap-4">
+        <div class="size-10 rounded-xl bg-blue-50 text-blue-400 flex items-center justify-center"><span class="material-symbols-outlined">share</span></div>
+        <div class="size-10 rounded-xl bg-pink-50 text-pink-400 flex items-center justify-center"><span class="material-symbols-outlined">favorite</span></div>
+        <div class="size-10 rounded-xl bg-yellow-50 text-yellow-500 flex items-center justify-center"><span class="material-symbols-outlined">grade</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="blog_data.js" defer></script>
+  <script src="tips.js" defer></script>
+  <script src="bond_data.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+
+</html>
