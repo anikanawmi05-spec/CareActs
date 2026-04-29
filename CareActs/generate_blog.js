@@ -36,13 +36,13 @@ if (!fs.existsSync(blogDir)) {
 
 // HTML template for each blog post
 function generateHTML(post) {
-    const canonicalUrl = `https://careacts.app/blog/${post.slug}.html`;
+    const canonicalUrl = `https://careacts.netlify.app/blog/${post.slug}.html`;
     const imageUrl = post.image && post.image.startsWith('http')
         ? post.image
         : `../${post.image}`;
     const ogImage = post.image && post.image.startsWith('http')
         ? post.image
-        : `https://careacts.app/${post.image}`;
+        : `https://careacts.netlify.app/${post.image}`;
     const keywordsStr = (post.keywords || []).join(', ');
 
     return `<!DOCTYPE html>
@@ -199,6 +199,6 @@ console.log(`\n🎉 Done! Generated ${count} blog pages in /blog folder.`);
 console.log('\n📋 Sitemap URLs to add:');
 blogPosts.forEach(post => {
     if (post.slug) {
-        console.log(`  <url><loc>https://careacts.app/blog/${post.slug}.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
+        console.log(`  <url><loc>https://careacts.netlify.app/blog/${post.slug}.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
     }
 });
