@@ -489,7 +489,7 @@ function renderBlogPosts() {
     }
 
     grid.innerHTML = blogPosts.map((post) => `
-        <article class="blog-card level-card rounded-[2rem] overflow-hidden flex flex-col h-full bg-white cursor-pointer" onclick="openArticle('${post.slug}')">
+        <a href="blog/${post.slug}.html" class="blog-card level-card rounded-[2rem] overflow-hidden flex flex-col h-full bg-white transition-all hover:shadow-xl hover:-translate-y-1">
             <div class="h-60 w-full overflow-hidden">
                 <img src="${post.image}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" alt="${post.title}">
             </div>
@@ -505,7 +505,7 @@ function renderBlogPosts() {
                     <span class="material-symbols-outlined text-slate-300">arrow_forward</span>
                 </div>
             </div>
-        </article>
+        </a>
     `).join('');
 }
 
