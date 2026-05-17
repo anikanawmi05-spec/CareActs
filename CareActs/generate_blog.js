@@ -55,6 +55,8 @@ function generateHTML(post) {
   <meta name="keywords" content="${keywordsStr}" />
   <meta name="author" content="${post.author || 'CareActs Team'}" />
   <link rel="canonical" href="${canonicalUrl}" />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="apple-touch-icon" href="../favicon.png" />
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="article" />
@@ -193,12 +195,33 @@ blogPosts.forEach(post => {
     count++;
 });
 
-console.log(`\n🎉 Done! Generated ${count} blog pages in /blog folder.`);
+// Rebuild sitemap.xml from scratch to ensure cleanliness and remove dead links
+const sitemapPath = path.join(__dirname, 'sitemap.xml');
+const today = new Date().toISOString().split('T')[0];
 
-// Generate updated sitemap entries
-console.log('\n📋 Sitemap URLs to add:');
+let sitemapEntries = [
+    `  <url>
+    <loc>https://careacts.netlify.app/</loc>
+    <lastmod>${today}</lastmod>
+    <priority>1.0</priority>
+  </url>`
+];
+
 blogPosts.forEach(post => {
-    if (post.slug) {
-        console.log(`  <url><loc>https://careacts.netlify.app/blog/${post.slug}.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
-    }
+    if (!post.slug) return;
+    const postUrl = `https://careacts.netlify.app/blog/${post.slug}.html`;
+    sitemapEntries.push(`  <url>
+    <loc>${postUrl}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`);
 });
+
+const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries.join('\n')}
+</urlset>`;
+
+fs.writeFileSync(sitemapPath, sitemapContent, 'utf8');
+console.log('✨ sitemap.xml has been rebuilt and cleaned successfully.');
